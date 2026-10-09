@@ -1,0 +1,43 @@
+
+
+services:
+  # 1. บริการเว็บแอปพลิเคชัน (PHP + Apache)
+  web:
+    build: .
+    container_name: crud_web_app
+    ports:
+      - "8082:80"
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - db
+
+  # 2. บริการฐานข้อมูล MySQL
+  db:
+    image: mysql:8.0
+    container_name: crud_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_crud_db
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+  # 3. บริการจัดการฐานข้อมูล phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: crud_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+
+volumes:
+  db_data:
