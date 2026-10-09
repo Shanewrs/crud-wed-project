@@ -59,7 +59,7 @@ Make sure you have installed on your machine:
 
 ### 1. Clone the Repository
 ```bash
-git clone <YOUR_REPOSITORY_URL>
+git clone https://github.com/Shanewrs/crud-wed-project.git
 cd crud-wed-project
 ```
 
